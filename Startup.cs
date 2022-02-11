@@ -13,6 +13,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using LeaveManagement.Web.Configuration;
+using LeaveManagement.Web.Contracts;
+using LeaveManagement.Web.Repositories;
 
 namespace LeaveManagement.Web
 {
@@ -34,6 +36,8 @@ namespace LeaveManagement.Web
             services.AddIdentity<Employee,IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddAutoMapper(typeof(MapperConfig));
+            services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddScoped<ILeaveTypeRepository,LeaveTypeRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
