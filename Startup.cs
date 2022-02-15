@@ -1,20 +1,16 @@
+using LeaveManagement.Web.Configuration;
+using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Data;
+using LeaveManagement.Web.Repositories;
+using LeaveManagement.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
-using LeaveManagement.Web.Configuration;
-using LeaveManagement.Web.Contracts;
-using LeaveManagement.Web.Repositories;
 
 namespace LeaveManagement.Web
 {
@@ -33,11 +29,29 @@ namespace LeaveManagement.Web
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
-            services.AddIdentity<Employee,IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            
+            services.AddIdentity<Employee,IdentityRole>(opt =>
+            {
+                opt.Password.RequiredLength = 7;
+                opt.Password.RequireDigit = true;
+                opt.Password.RequireUppercase = true;
+                opt.User.RequireUniqueEmail = true;
+                opt.SignIn.RequireConfirmedEmail = true;
+                opt.SignIn.RequireConfirmedAccount = true;
+            })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(option => {
+                option.LoginPath =  $"/Identity/Account/Login";
+                option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
             services.AddAutoMapper(typeof(MapperConfig));
+            services.AddTransient < IEmailSender> (s=>new EmailSender("localhost",25,"no-reply@leavemanagement.com"));//(ServerPath,port,FromEmail)
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveTypeRepository,LeaveTypeRepository>();
+            services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +72,8 @@ namespace LeaveManagement.Web
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -65,6 +81,7 @@ namespace LeaveManagement.Web
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

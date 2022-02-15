@@ -10,3 +10,8 @@
 Adding Custom ClientSide Library
 1 project rightclick add clientSideLibrary
 2 library add  name (eg SweetAlert) & install
+
+
+Identity
+scaffold at project level and click require views & select db context.
+It will also create _LoginPartial in sharedFolder

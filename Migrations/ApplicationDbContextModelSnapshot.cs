@@ -97,6 +97,48 @@ namespace LeaveManagement.Web.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "67bi2cf3-2950-4ffe-b1f0-75f8705e2469",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "8db31ca1-0a88-460e-925b-6f9e81ba22ba",
+                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "admin@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "System",
+                            LastName = "Admin",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@LOCALHOST.COM",
+                            NormalizedUserName = "ADMIN@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIbsBBz3cvocYIXt9gv/WaJ5TUMPBqnyGn/ETy36+6ID8DHQXpR2BgkYDQlDbF6wRg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "13aa49c1-a698-4a5f-809c-207ec59855bb",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@localhost.com"
+                        },
+                        new
+                        {
+                            Id = "67bq2cb3-1955-4sfe-b1f7-73f8705e2469",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "23a34b3b-40fa-4482-ae73-07f4c3f84a4a",
+                            DateJoined = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            DateOfBirth = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Email = "user@localhost.com",
+                            EmailConfirmed = true,
+                            FirstName = "System",
+                            LastName = "User",
+                            LockoutEnabled = false,
+                            NormalizedEmail = "USER@LOCALHOST.COM",
+                            NormalizedUserName = "USER@LOCALHOST.COM",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIOdFH0txBT/ivdfFhrFoQNqUyeFCxRFYJN3GDsruTwY12P1ht58ink+D01ZB8c9cw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "a5998928-9147-46c2-945c-00f40a48ef82",
+                            TwoFactorEnabled = false,
+                            UserName = "user@localhost.com"
+                        });
                 });
 
             modelBuilder.Entity("LeaveManagement.Web.Data.LeaveAllocation", b =>
@@ -174,6 +216,22 @@ namespace LeaveManagement.Web.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "67cb2cf7-7950-4ffe-b1f0-75f8705e6461",
+                            ConcurrencyStamp = "f38a7877-aaff-4043-9653-7189bca4c9f3",
+                            Name = "Administrator",
+                            NormalizedName = "ADMINISTRATOR"
+                        },
+                        new
+                        {
+                            Id = "67aa2cf7-7951-4ffe-b1f0-76f8705e6461",
+                            ConcurrencyStamp = "fc2a6d1b-a12a-4f70-9d0c-388cbe877582",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -259,6 +317,18 @@ namespace LeaveManagement.Web.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles");
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "67bi2cf3-2950-4ffe-b1f0-75f8705e2469",
+                            RoleId = "67cb2cf7-7950-4ffe-b1f0-75f8705e6461"
+                        },
+                        new
+                        {
+                            UserId = "67bq2cb3-1955-4sfe-b1f7-73f8705e2469",
+                            RoleId = "67aa2cf7-7951-4ffe-b1f0-76f8705e6461"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
