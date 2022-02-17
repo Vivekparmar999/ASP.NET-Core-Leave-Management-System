@@ -16,6 +16,11 @@ namespace LeaveManagement.Web.Configuration
             //It will map if it has same DataType & VaraiableName
             CreateMap<LeaveType, LeaveTypeVM>().ReverseMap();
             //2 We have to registered in Services.
+
+            CreateMap<Employee, EmployeeListVM>().ReverseMap();
+            CreateMap<Employee, EmployeeAllocationVM>().ReverseMap();
+            CreateMap<LeaveAllocation, LeaveAllocationVM>().ReverseMap();
+            CreateMap<LeaveAllocation, LeaveAllocationEditVM>().ReverseMap();
         }
     }
 }

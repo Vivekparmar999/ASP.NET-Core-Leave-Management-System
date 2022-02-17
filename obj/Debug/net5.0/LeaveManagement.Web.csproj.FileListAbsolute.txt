@@ -458,3 +458,6 @@ C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\n
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml.g.cs
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\Index.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\ViewAllocation.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\EditAllocation.cshtml.g.cs

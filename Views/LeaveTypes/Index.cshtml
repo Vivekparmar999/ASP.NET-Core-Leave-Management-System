@@ -31,19 +31,25 @@
                 @Html.DisplayFor(modelItem => item.DefaultDays)
             </td>
             <td>
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id" style="color:#FFFFFF;"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</a> 
-                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i>&nbsp;Details</a> 
+                <button data-id="@item.Id" class="btn btn-danger allocateBtn" type="button"><i class="fas fa-house-leave"></i>&nbsp;Allocate Leave</button>
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id" style="color:#FFFFFF;"><i class="fa-solid fa-pen-to-square"></i>&nbsp;Edit</a>
+                <a class="btn btn-info" asp-action="Details" asp-route-id="@item.Id"><i class="fa-solid fa-circle-info"></i>&nbsp;Details</a>
                 @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
                 <!-- data-anything   anything:key-->
-            <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"><i class="fa-solid fa-trash-can"></i>&nbsp;Delete</button>
+                <button data-id="@item.Id" class="btn btn-danger deleteBtn" type="button"><i class="fa-solid fa-trash-can"></i>&nbsp;Delete</button>
             </td>
         </tr>
 }
     </tbody>
 </table>
 
+<!-- Here Name == input of controller   eg -Id fun(int Id) -->
 <form id="deleteForm" asp-action="Delete">
     <input type="hidden" id="LeaveTypeId" name="Id"/>
+</form>
+
+<form id="allocateForm" asp-action="AllocateLeave">
+    <input type="hidden" id="allocateLeaveId" name="Id" />
 </form>
 
 @section Scripts
@@ -51,7 +57,6 @@
 <script>
 
     $(function () {
-        $('.table').DataTable();
 
         $('.deleteBtn').click(function (e)
         {
@@ -72,6 +77,25 @@
                 }
             });
         });
+
+        $('.allocateBtn').click(function (e) {
+            swal({
+                title: "Are You Sure?",
+                text: "Are You sure you want to allocate this leave to all employee?",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((confirm) => {
+                if (confirm) {
+                    var btn = $(this);
+                    //here id is key for data
+                    var id = btn.data("id");
+                    $('#allocateLeaveId').val(id);
+                    $('#allocateForm').submit();
+                }
+            });
+        });
+
     });
 </script>
 }

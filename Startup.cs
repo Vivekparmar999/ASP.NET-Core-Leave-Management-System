@@ -51,6 +51,7 @@ namespace LeaveManagement.Web
             services.AddTransient < IEmailSender> (s=>new EmailSender("localhost",25,"no-reply@leavemanagement.com"));//(ServerPath,port,FromEmail)
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveTypeRepository,LeaveTypeRepository>();
+            services.AddTransient<ILeaveAllocationRepository,LeaveAllocationRepository>();
             services.AddRazorPages();
         }
 
