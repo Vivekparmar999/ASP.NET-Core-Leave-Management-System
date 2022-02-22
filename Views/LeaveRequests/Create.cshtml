@@ -1,0 +1,48 @@
+﻿@model LeaveRequestCreateVM
+
+@{
+    ViewData["Title"] = "Apply for Leave";
+}
+
+<h1>Apply for Leave</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="LeaveTypeId" class="control-label"></label>
+                <!-- It comes data from ViewData["LeaveTypeId"]-->
+                <select asp-for="LeaveTypeId" class="form-control" asp-items="Model?.LeaveTypes">
+                    <option>Select Leave Type</option>
+                </select>
+                <span asp-validation-for="LeaveTypeId" class="text-danger"></span>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="StartDate" class="control-label"></label>
+                    <input asp-for="StartDate" class="form-control datepicker" type="text" />
+                    <span asp-validation-for="StartDate" class="text-danger"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="EndDate" class="control-label"></label>
+                    <input asp-for="EndDate" class="form-control datepicker" type="text" />
+                    <span asp-validation-for="EndDate" class="text-danger"></span>
+                </div>
+            </div>
+            <br/>
+            <div class="form-group">
+                <label asp-for="RequestComments" class="control-label"></label>
+                <textarea asp-for="RequestComments" class="form-control"></textarea>
+                <span asp-validation-for="RequestComments" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+

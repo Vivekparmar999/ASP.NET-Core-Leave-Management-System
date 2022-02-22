@@ -461,3 +461,9 @@ C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\n
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\Index.cshtml.g.cs
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\ViewAllocation.cshtml.g.cs
 C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\Employees\EditAllocation.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\Create.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\Delete.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\Details.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\Edit.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\Index.cshtml.g.cs
+C:\Users\146734\source\repos\LeaveManagementNet6\LeaveManagement.Web\obj\Debug\net5.0\Razor\Views\LeaveRequests\MyLeave.cshtml.g.cs

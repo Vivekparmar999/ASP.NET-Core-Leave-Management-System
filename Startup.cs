@@ -47,10 +47,15 @@ namespace LeaveManagement.Web
                 option.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
+            //It can access HttpContext from another non controller class
+            //Eg it can get info user,request,reponse,...
+            services.AddHttpContextAccessor();
+
             services.AddAutoMapper(typeof(MapperConfig));
             services.AddTransient < IEmailSender> (s=>new EmailSender("localhost",25,"no-reply@leavemanagement.com"));//(ServerPath,port,FromEmail)
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ILeaveTypeRepository,LeaveTypeRepository>();
+            services.AddScoped<ILeaveRequestRepository,LeaveRequestRepository>();
             services.AddTransient<ILeaveAllocationRepository,LeaveAllocationRepository>();
             services.AddRazorPages();
         }

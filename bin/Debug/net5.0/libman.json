@@ -9,6 +9,10 @@
     {
       "library": "font-awesome@6.0.0",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "datepicker@1.0.10",
+      "destination": "wwwroot/lib/datepicker/"
     }
   ]
 }

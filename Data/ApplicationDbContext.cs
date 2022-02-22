@@ -20,8 +20,15 @@ namespace LeaveManagement.Web.Data
             builder.ApplyConfiguration(new UserRoleSeedConfiguration());
         }
 
+        // Admin Will add NEW type of leave in db or CRUD
         public DbSet<LeaveType> LeaveTypes { get; set; }
+        
+        //Admin will set new LeaveType to all employee in LeaveManagement -> LeaveType ->Allocate Leave
+        //After that only 
         public DbSet<LeaveAllocation> LeaveAllocations { get; set; }
+
+        //Most of User will request for leave in ApplyForLeave
+        public DbSet<LeaveRequest> LeaveRequests { get; set; }
 
     }
 }
