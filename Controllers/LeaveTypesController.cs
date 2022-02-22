@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LeaveManagement.Web.Controllers
@@ -48,7 +47,7 @@ namespace LeaveManagement.Web.Controllers
             {
                 return NotFound();
             }
-            
+
             var leaveTypeVM = mapper.Map<LeaveTypeVM>(leaveType);
             return View(leaveTypeVM);
         }
@@ -103,7 +102,7 @@ namespace LeaveManagement.Web.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if ( !(await LeaveTypeExists(leaveTypeVM.Id)))
+                    if (!(await LeaveTypeExists(leaveTypeVM.Id)))
                     {
                         return NotFound();
                     }
@@ -133,7 +132,7 @@ namespace LeaveManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AllocateLeave(int Id) 
+        public async Task<IActionResult> AllocateLeave(int Id)
         {
             await leaveAllocationRepository.LeaveAllocation(Id);
             return RedirectToAction(nameof(Index));

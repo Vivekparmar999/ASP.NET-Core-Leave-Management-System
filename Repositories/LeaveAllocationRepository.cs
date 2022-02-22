@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using LeaveManagement.Web.Constants;
 using LeaveManagement.Web.Contracts;
 using LeaveManagement.Web.Data;
@@ -12,36 +13,39 @@ using System.Threading.Tasks;
 
 namespace LeaveManagement.Web.Repositories
 {
-    public class LeaveAllocationRepository:GenericRepository<LeaveAllocation>,ILeaveAllocationRepository
+    public class LeaveAllocationRepository : GenericRepository<LeaveAllocation>, ILeaveAllocationRepository
     {
         private readonly ApplicationDbContext context;
         private readonly UserManager<Employee> userManager;
         private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly IMapper mapper;
+        private readonly IConfigurationProvider configurationProvider;
 
         public LeaveAllocationRepository(ApplicationDbContext context,
             UserManager<Employee> userManager,
             ILeaveTypeRepository leaveTypeRepository,
-            IMapper mapper):base(context)
+            IMapper mapper,
+            AutoMapper.IConfigurationProvider configurationProvider) : base(context)
         {
             this.context = context;
             this.userManager = userManager;
             this.leaveTypeRepository = leaveTypeRepository;
             this.mapper = mapper;
+            this.configurationProvider = configurationProvider;
         }
 
         public async Task<bool> AllocationExists(string employeeId, int leaveTypeId, int period)
         {
-         return  await context.LeaveAllocations.AnyAsync(q => q.EmployeeId == employeeId 
-                                                    && q.LeaveTypeId == leaveTypeId
-                                                    && q.Period == period);
+            return await context.LeaveAllocations.AnyAsync(q => q.EmployeeId == employeeId
+                                                      && q.LeaveTypeId == leaveTypeId
+                                                      && q.Period == period);
         }
 
         public async Task<LeaveAllocationEditVM> GetEmployeeAllocation(int id)
         {
             var allocation = await context.LeaveAllocations
                 .Include(q => q.LeaveType)
-                .FirstOrDefaultAsync(q=>q.Id==id);
+                .FirstOrDefaultAsync(q => q.Id == id);
 
             if (allocation == null)
                 return null;
@@ -50,27 +54,42 @@ namespace LeaveManagement.Web.Repositories
             var model = mapper.Map<LeaveAllocationEditVM>(allocation);
             model.Employee = mapper.Map<EmployeeListVM>(await userManager.FindByIdAsync(allocation.EmployeeId));
             return model;
+
         }
 
         public async Task<LeaveAllocation> GetEmployeeAllocation(string employeeId, int leaveTypeId)
         {
             return await context.LeaveAllocations
-                .FirstOrDefaultAsync(q=>q.EmployeeId == employeeId && q.LeaveTypeId == leaveTypeId);
+                .FirstOrDefaultAsync(q => q.EmployeeId == employeeId && q.LeaveTypeId == leaveTypeId);
         }
 
         public async Task<EmployeeAllocationVM> GetEmployeeAllocations(string employeeId)
         {
+            /*            var allocations = await context.LeaveAllocations
+                            .Include(q=>q.LeaveType)
+                            .Where(q => q.EmployeeId == employeeId)
+                            .ToListAsync();
+                        var employee = await userManager.FindByIdAsync(employeeId);
+                        var employeeAllocationModel = mapper.Map<EmployeeAllocationVM>(employee);
+                        employeeAllocationModel.leaveAllocations = mapper.Map<List<LeaveAllocationVM>>(allocations);
+                        return employeeAllocationModel;*/
+
+            //Or Use projection rather than Mapper for inbuilt Database conversion
+
             var allocations = await context.LeaveAllocations
-                .Include(q=>q.LeaveType)
+                .Include(q => q.LeaveType)
                 .Where(q => q.EmployeeId == employeeId)
+                .ProjectTo<LeaveAllocationVM>(configurationProvider)
                 .ToListAsync();
+
             var employee = await userManager.FindByIdAsync(employeeId);
             var employeeAllocationModel = mapper.Map<EmployeeAllocationVM>(employee);
-            employeeAllocationModel.leaveAllocations = mapper.Map<List<LeaveAllocationVM>>(allocations);
+            employeeAllocationModel.leaveAllocations = allocations;
+
             return employeeAllocationModel;
         }
 
-        public async Task LeaveAllocation(int LeaveId) 
+        public async Task LeaveAllocation(int LeaveId)
         {
             //Column  required LeaveTypeId,EmployeeId,Period
 
@@ -84,17 +103,18 @@ namespace LeaveManagement.Web.Repositories
 
             //Creating List of LeaveAllocation
             var allocation = new List<LeaveAllocation>();
-            foreach(var employee in employees)
+            foreach (var employee in employees)
             {
                 if (await AllocationExists(employee.Id, LeaveId, period))
                     continue;
 
                 allocation.Add(
-                    new LeaveAllocation { 
-                    EmployeeId = employee.Id,
-                    LeaveTypeId=leaveType.Id,
-                    Period=period,
-                    NumberOfDays=leaveType.DefaultDays
+                    new LeaveAllocation
+                    {
+                        EmployeeId = employee.Id,
+                        LeaveTypeId = leaveType.Id,
+                        Period = period,
+                        NumberOfDays = leaveType.DefaultDays
                     });
             }
 
