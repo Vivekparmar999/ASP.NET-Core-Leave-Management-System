@@ -19,3 +19,6 @@ It will also create _LoginPartial in sharedFolder
 To Pass data from controller to view use 
 1)ViewBag
 2)Return model in controller eg return View(model);
+
+TempData
+It stay Data for 1 req Only.After that we Cannot Access(Generally use for alert box,..)
